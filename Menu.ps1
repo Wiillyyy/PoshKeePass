@@ -1,4 +1,4 @@
-Install-Module -Name PoShKeePass
+#Install-Module -Name PoShKeePass
 #================================================================================================#
 #Fonction qui affiche le menu de l'accueil
 function Show-Menu {
@@ -15,7 +15,7 @@ function Show-Menu {
 }
 
 #================================================================================================#
-#Fonction qui affiche le menu de connexion à la BDD
+#Fonction qui affiche le menu de connexion à la BDD ((( NE MARCHE PAS N'EST PAS UTILISE )))
 function Show-MenuLogIn {
  
     Start-ConnexionBDD
@@ -73,12 +73,11 @@ function Show-ScriptMenu {
         Show-MenuRemove
     }
     elseif ($selection -eq 'Q') {
-        Clear-Host
-        return
-        Clear-Host        
+        Write-Host "Au revoir et à bientôt !"
+        return     
     }
     else {
-        Write-Host "Ce n'est pas une commance valide. Veuillez reessayer !"
+        Write-Host "Ce n'est pas une commande valide. Veuillez reessayer !"
         Start-Sleep -s 2
         Show-ScriptMenu
     }
@@ -99,9 +98,12 @@ function Show-ScriptMenuLogIn {
     Write-Host "1: Ajouter un nouveau mot de passe"
     Write-Host "2: Changer un mot de passe"
     Write-Host "3: Supprimer un mot de passe"
+    Write-Host "4: Afficher vos mots de passe"
     Write-Host "R: Retour"
 
     $selection = Read-Host "Faites un choix"
+
+
     if ($selection -eq '1') {
         Clear-Host
         Write-Output "Ajout de mot de passe.."
@@ -116,9 +118,14 @@ function Show-ScriptMenuLogIn {
     } elseif ($selection -eq '2') {
         Clear-Host
         Write-Host "Vous avez choisis de changer un de vos mots de passe"
+
     } elseif ($selection -eq '3') {
         Clear-Host
         Write-Host "Vous avez choisis de supprimer un de vos mots de passe"
+
+    }  elseif ($selection -eq '4') {
+            Get-KeePassEntry -AsPlainText -DatabaseProfileName $db -KeePassEntryGroupPath $db/General
+    
     } elseif ($selection -eq 'R') {
         Show-ScriptMenu
     } else {
@@ -218,6 +225,7 @@ function Start-RemoveBDD {
             Write-Host "Ce n'est pas une commance valide. Veuillez réssayer !"
             Start-Sleep -s 2
             return
+            exit
         }
     } else {
         Write-Host "Cette base de donnee n'existe pas"
