@@ -1,4 +1,4 @@
-
+Install-Module -Name PoShKeePass
 #================================================================================================#
 #Fonction qui affiche le menu de l'accueil
 function Show-Menu {
@@ -96,7 +96,7 @@ function Show-ScriptMenuLogIn {
 
     Write-Host "Bienvenue sur $db"
 
-    Write-Host "1: Acceder aux mots de passe"
+    Write-Host "1: Ajouter un nouveau mot de passe"
     Write-Host "2: Changer un mot de passe"
     Write-Host "3: Supprimer un mot de passe"
     Write-Host "R: Retour"
@@ -171,7 +171,7 @@ function Start-Loader {
 function Start-ConnexionBDD {
     $db = Read-Host "Entrez le nom de votre base de donnees"
     if (Test-Path -Path "\\keepass\Keepass\$db.kdbx") {
-        ./Déco.ps1
+        ./Deco.ps1
         New-KeePassDatabaseConfiguration -DatabaseProfileName $db -DatabasePath "\\keepass\Keepass\$db.kdbx" -UseMasterKey
         Write-Host "Connexion a la bdd..."
         Start-Loader
