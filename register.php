@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>Connexion</title>
+    <title>Inscription</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
 
@@ -40,7 +40,7 @@
 <main class="form-signin">
   <form>
     <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Connexion</h1>
+    <h1 class="h3 mb-3 fw-normal">Inscription</h1>
 
     <div class="form-floating">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -53,13 +53,13 @@
 
     <div class="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"> Se souvenir de moi
+        <!-- <input type="checkbox" value="remember-me"> Se souvenir de moi -->
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Connexion</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">S'inscrire</button>
     <div class="PaCompte"><br>
-    <h5 class="h5 mb-5 fw-normal">Pas encore de compte ?</h5>
-      <a href="register.php" class="h6 mb-6 fw-normal">On s'en occupe</a>
+    <h5 class="h5 mb-5 fw-normal">On se rappelle de ses ID ?</h5>
+
     </div>
     <p class="mt-5 mb-3 text-muted">&copy; 2021–2021</p>
   </form>
