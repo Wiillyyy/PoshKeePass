@@ -48,6 +48,6 @@ Une fois connecté a sa base de donnée on peut soit Afficher/Modifier/Supprimer
 - [Kerberos](https://github.com/GhostPack/Rubeus) - Pour la sécurisation du tout
 
 ## ✍️ Auteur <a name = "auth"></a>
--Moi-
-Mon très cher : Evanou
-Et le plus beau des dz : Aymen
+-Moi- <br>
+Mon très cher : [@Hikaem](https://github.com/Hikaem) <br>
+Et le plus beau des dz : @Aymen
