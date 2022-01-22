@@ -27,8 +27,16 @@ Ce Script Powershell est un projet que je dois réaliser dans le cadre de ma deu
 API REST, Powershell, PoshKeePass sont les maîtres mots de ce projet 👺
 
 ## 🤖 Le Projet <a name = "proj"></a>
-Le projet est <br>
-[![Status](https://img.shields.io/badge/-bient%C3%B4t%20termin%C3%A9-orange?style=for-the-badge)]() 
+Script Principal <br>
+[![Status](https://img.shields.io/badge/Etat-95%25-brightgreen)]()
+
+Sécurisation Kerberos <br>
+[![Status](https://img.shields.io/badge/Etat-0%25-red)]()
+
+Site Web <br>
+[![Status](https://img.shields.io/badge/Etat-0%25-red)]()
+
+
 
 ## ℹ Informations <a name = "informations"></a>
 Le rendu final du projet consiste à proposer un site web dans lequel on pourra accéder accéder a ses différentes bases de donnés, celles ci seront stockés sur un ordinateur distant, en effet le PC sur laquel vous ferez des requêtes n'est pas le PC sur lequel est stocké la base de donnée, pour améliorer la sécurité, les echanges se feront en réseau local, encrypté par Kerberos, les ordinateurs se trouvent sur le même serveur AD DS.
