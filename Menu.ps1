@@ -11,6 +11,7 @@ function Show-Menu {
     Write-host "1: Se connecter a sa base de donnees"
     Write-host "2: Creer sa base de donnees"
     Write-host "3: Supprimer sa base de donnees"
+    Write-host "4: Liste les bases de donnees"
     Write-Host "Q: Quitter"
 }
 
@@ -21,11 +22,11 @@ function Show-MenuLogIn {
     Start-ConnexionBDD
 
     Write-Host "===================================================================="
-    Write-Host "-------------- Connexion a la base de donnees KeeRest --------------"
+    Write-Host "-------------- Menu de la base de donnees KeeRest --------------"
     Write-Host "===================================================================="
 
     Write-Host "1: Acceder aux mots de passe"
-    Write-Host "2: Changer un mot de passe"
+    Write-Host "2: Modifier un mot de passe"
     Write-Host "3: Supprimer un mot de passe"
     Write-Host "R: Retour"
         
@@ -72,8 +73,12 @@ function Show-ScriptMenu {
 
         Show-MenuRemove
     }
+    elseif ($selection -eq '4') {
+
+        Show-MenuList
+    }
     elseif ($selection -eq 'Q') {
-        Write-Host "Au revoir et à bientôt !"
+        Write-Host "Au revoir et a bientot !"
         return     
     }
     else {
@@ -105,32 +110,23 @@ function Show-ScriptMenuLogIn {
 
 
     if ($selection -eq '1') {
-        Clear-Host
-        Write-Output "Ajout de mot de passe.."
-                    
-        $title = Read-Host -Prompt 'Rentrez le titre, nom du site(Par ex: Google)'
-        $id = Read-Host -Prompt 'Rentrez un username/e-mail (Par ex: jawadhebergeur420@gmail.com)'
-        $pwdd = Read-Host 'Rentrez un MDP [F O R T]' -AsSecureString
-        New-KeePassEntry -DatabaseProfileName $db -Title $title -UserName $id -KeePassPassword $pwdd -KeePassEntryGroupPath $db/General
-        Remove-KeePassDatabaseConfiguration -DatabaseProfileName $db
+        ./1.addMDP.ps1
         
-
     } elseif ($selection -eq '2') {
-        Clear-Host
-        Write-Host "Vous avez choisis de changer un de vos mots de passe"
+        ./2.editMDP.ps1
 
     } elseif ($selection -eq '3') {
-        Clear-Host
-        Write-Host "Vous avez choisis de supprimer un de vos mots de passe"
+        ./3.dellMDP.ps1
 
     }  elseif ($selection -eq '4') {
-            Get-KeePassEntry -AsPlainText -DatabaseProfileName $db -KeePassEntryGroupPath $db/General
+        Clear-Host
+        ./4.AfficheMDP.ps1
     
     } elseif ($selection -eq 'R') {
         Show-ScriptMenu
     } else {
         Write-Host ""
-        Write-Host "Ce n'est pas une commance valide. Veuillez réssayer !"
+        Write-Host "Ce n'est pas une commande valide. Veuillez réssayer !"
         Start-Sleep -s 2
         Show-ScriptMenuLogIn
     }
@@ -181,7 +177,7 @@ function Start-ConnexionBDD {
         ./Deco.ps1
         New-KeePassDatabaseConfiguration -DatabaseProfileName $db -DatabasePath "\\keepass\Keepass\$db.kdbx" -UseMasterKey
         Write-Host "Connexion a la bdd..."
-        Start-Loader
+        <# Start-Loader #>
         Show-ScriptMenuLogIn
     } else {
         Write-Host "Cette base de donnee n'existe pas"
@@ -194,35 +190,40 @@ function Start-ConnexionBDD {
 #Fonction connexion BDD
 
 function Start-CreateBDD  {
-    $db = Read-Host "Entrez le nom de votre nouvelle base de donnees "
-    if (Test-Path -Path "C:\Users\aymen\Documents\BDDKeePass\$db.kdbx") {
-        Write-Host "Cette base de donnee n'existe pas"
+    $db = Read-Host "Entrez le nom de votre nouvelle base de donnees"
+    if (Test-Path -Path "\\Keepass\keepass\$db.kdbx") {
+        Write-Host "Cette base de donnee existe deja"
         Start-Sleep -s 2
         Show-ScriptMenu
     } else {
-        New-Item -Path "C:\Users\aymen\Documents\BDDKeePass\$db.kdbx" -ItemType File
-        #Creer un mot de passe
-        Write-Host "Connexion a la bdd..."
-        Start-Loader
-        Show-ScriptMenuLogIn
+        Write-Host "==> Veuillez saisir le mot de passe de la base de donnees <== "
+        New-KeePassDatabase -DatabasePath "\\Keepass\keepass\$db.kdbx" -MasterKey $db
+        Write-Host "Base de donnees creee !"
+        Start-Sleep -s 6
+        New-KeePassGroup -KeePassGroupParentPath $db -DatabaseProfileName $db -KeePassGroupName 'General'
+        Show-ScriptMenu
     }
     
 }
 
 function Start-RemoveBDD {
+
+Clear-Host
+Write-Host "=== Listing des BDD ==="
+Get-ChildItem -Path "\\keepass\Keepass" -Recurse | Where-Object {$_.Name -like '*.kdbx'}
     
-    $db = Read-Host "Entrez le nom de la base de donnees que vous voulez supprimer "
-    if (Test-Path -Path "C:\Users\aymen\Documents\BDDKeePass\$db.kdbx") {
-        $valid = Read-Host "Etes vous sur de vouloir supprimer la basse de donnee $db ? /n Tapez [O] oui [N] non"
+    $db = Read-Host "Entrez le nom de la base de donnees que vous voulez supprimer (sans .kbdx) "
+    if (Test-Path -Path "\\keepass\Keepass\$db.kdbx") {
+        $valid = Read-Host "ATTENTION TOUTE DONNEE SERA PERDUE, Etes vous VRAIMENT sur de vouloir supprimer la bdd $db ? Tapez [O]ui / [N]on"
         if ($valid -eq 'O') {
-            Remove-Path -Path "C:\Users\aymen\Documents\BDDKeePass\$db.kdbx"
+            Remove-Item -Force "\\keepass\Keepass\$db.kdbx"
             Write-Host "Suppression de la base de donnee en cours..."
             Start-Loader
             Show-ScriptMenu
         } elseif ($valid -eq 'N') {
             Show-ScriptMenu
         } else {
-            Write-Host "Ce n'est pas une commance valide. Veuillez réssayer !"
+            Write-Host "Ce n'est pas une commande valide. Veuillez réssayer !"
             Start-Sleep -s 2
             return
             exit
@@ -235,3 +236,10 @@ function Start-RemoveBDD {
     #demander le mot de passe de la bdd
 }
 Show-ScriptMenu
+
+function MenuList {
+    Clear-Host
+    Write-Host "=== Listing des BDD ==="
+    Get-ChildItem -Path "\\keepass\Keepass" -Recurse | Where-Object {$_.Name -like '*.kdbx'}
+    Start-Sleep -s 2
+}
