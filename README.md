@@ -49,5 +49,5 @@ Une fois connecté a sa base de donnée on peut soit Afficher/Modifier/Supprimer
 
 ## ✍️ Auteur <a name = "auth"></a>
 -Moi- <br>
-Mon très cher : [Hikaem](Ua2kuT7nNCkb) <br>
-Et le plus beau des dz : @Hikaem
+Mon très cher : [@Hikaem](https://github.com/Hikaem) <br>
+Et le plus beau des dz : @Aymen
