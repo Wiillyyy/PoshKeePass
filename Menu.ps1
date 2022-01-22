@@ -1,17 +1,31 @@
 #Install-Module -Name PoShKeePass
+
+function Show-MenuList {
+
+    Clear-host
+    Write-Host "=========================" | out-host
+    Write-Host "----  Liste des BDD  ----" | out-host
+    Write-Host "=========================" | out-host
+    Get-ChildItem -Path "\\keepass\Keepass" -Recurse | Where-Object {$_.Name -like '*.kdbx'}
+    $valid = Read-Host "Appuyez sur 'R' pour revenir au menu"
+        if ($valid -eq 'R') {
+            Show-ScriptMenu
+        }
+}
+
 #================================================================================================#
 #Fonction qui affiche le menu de l'accueil
 function Show-Menu {
 
     Clear-host
-    Write-Host "========================="
-    Write-Host "-------  Accueil  -------"
-    Write-Host "========================="
+    Write-Host "=========================" | out-host
+    Write-Host "-------  Accueil  -------" | out-host
+    Write-Host "=========================" | out-host
 
     Write-host "1: Se connecter a sa base de donnees"
     Write-host "2: Creer sa base de donnees"
     Write-host "3: Supprimer sa base de donnees"
-    Write-host "4: Liste les bases de donnees"
+    Write-host "4: Lister les bases de donnees"
     Write-Host "Q: Quitter"
 }
 
@@ -21,9 +35,9 @@ function Show-MenuLogIn {
  
     Start-ConnexionBDD
 
-    Write-Host "===================================================================="
-    Write-Host "-------------- Menu de la base de donnees KeeRest --------------"
-    Write-Host "===================================================================="
+    Write-Host "====================================================================" | out-host
+    Write-Host "-------------- Menu de la base de donnees KeeRest --------------" | out-host
+    Write-Host "====================================================================" | out-host
 
     Write-Host "1: Acceder aux mots de passe"
     Write-Host "2: Modifier un mot de passe"
@@ -79,7 +93,7 @@ function Show-ScriptMenu {
     }
     elseif ($selection -eq 'Q') {
         Write-Host "Au revoir et a bientot !"
-        return     
+        exit(1)    
     }
     else {
         Write-Host "Ce n'est pas une commande valide. Veuillez reessayer !"
@@ -198,9 +212,8 @@ function Start-CreateBDD  {
     } else {
         Write-Host "==> Veuillez saisir le mot de passe de la base de donnees <== "
         New-KeePassDatabase -DatabasePath "\\Keepass\keepass\$db.kdbx" -MasterKey $db
-        Write-Host "Base de donnees creee !"
+        Write-Host "Votre BDD a ete ajoute, vous pouvez vous y connecter a ajouter vos mdp !"
         Start-Sleep -s 6
-        New-KeePassGroup -KeePassGroupParentPath $db -DatabaseProfileName $db -KeePassGroupName 'General'
         Show-ScriptMenu
     }
     
@@ -233,13 +246,6 @@ Get-ChildItem -Path "\\keepass\Keepass" -Recurse | Where-Object {$_.Name -like '
         Start-Sleep -s 2
         Show-ScriptMenu
     }
-    #demander le mot de passe de la bdd
 }
 Show-ScriptMenu
 
-function MenuList {
-    Clear-Host
-    Write-Host "=== Listing des BDD ==="
-    Get-ChildItem -Path "\\keepass\Keepass" -Recurse | Where-Object {$_.Name -like '*.kdbx'}
-    Start-Sleep -s 2
-}

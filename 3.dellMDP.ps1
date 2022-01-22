@@ -1,12 +1,15 @@
-$AMDP = Get-KeePassEntry -AsPlainText -DatabaseProfileName $db -KeePassEntryGroupPath $db/General
+$motdpass = Read-Host -AsSecureString "Entrez votre mot de passe"
+$AMDP = Get-KeePassEntry -AsPlainText -DatabaseProfileName $db -KeePassEntryGroupPath $db -MasterKey $motdpass
+
 Write-Host "=== Listing de la BDD ==="
 Write-Output $AMDP | out-host
-Write-Host "=== Selectionner le TITRE pour choisir une entree ==="
+$title = Read-Host "Tapez le titre que vous souhaitez supprimer"
 
-$KeePassEntryObject = Read-Host -Prompt "Quel est le titre de l'entree ?"
+$Entry = Get-KeePassEntry -Title "$title" -KeePassEntryGroupPath $db -AsPlainText -DatabaseProfileName $db -MasterKey $motdpass
 
-Remove-KeePassEntry -DatabaseProfileName $db -KeePassEntry $KeePassEntryObject -Confirm:$false
+$motdpass2 = Read-Host -AsSecureString "Reconfirmation du mot de passe"
+Remove-KeePassEntry -NoRecycle -DatabaseProfileName $db -KeePassEntry $Entry -MasterKey $motdpass2 -Confirm:$true
 
 Write-Host "=== Entree supprimee ==="
-Start-Sleep -Seconds 10
-Show-ScriptMenuLogInfo
+Start-Sleep -Seconds 4
+Show-ScriptMenuLogIn

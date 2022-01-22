@@ -1,7 +1,9 @@
-$AMDP = Get-KeePassEntry -AsPlainText -DatabaseProfileName $db -KeePassEntryGroupPath $db/General
+$motdpass = Read-Host -AsSecureString "Entrez votre mot de passe"
+
+$AMDP = Get-KeePassEntry -AsPlainText -DatabaseProfileName $db -KeePassEntryGroupPath $db -MasterKey $motdpass
 Write-Host "=== Listing de la BDD ==="
 Write-Output $AMDP | out-host
-Write-Host "Appuyez sur entree pour continuer (attention deco. auto 20 secondes)"
-Start-Sleep -Seconds 20
-Write-Host "========================="
-Show-ScriptMenuLogIn
+$valid = Read-Host "Appuyez sur 'R' pour revenir au menu"
+if ($valid -eq 'R') {
+    Show-ScriptMenuLogIn
+}
