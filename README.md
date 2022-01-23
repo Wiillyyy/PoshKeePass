@@ -28,13 +28,13 @@ API REST, Powershell, PoshKeePass sont les maîtres mots de ce projet 👺
 
 ## 🤖 Le Projet <a name = "proj"></a>
 Script Principal <br>
-[![Status](https://img.shields.io/badge/Etat-95%25-brightgreen)]()
+[![Status](https://img.shields.io/badge/Etat-98%25-brightgreen)]()
 
 Sécurisation Kerberos <br>
 [![Status](https://img.shields.io/badge/Etat-0%25-red)]()
 
 Site Web <br>
-[![Status](https://img.shields.io/badge/Etat-0%25-red)]()
+[![Status](https://img.shields.io/badge/Etat-12%25-red)]()
 
 
 
